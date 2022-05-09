@@ -1,53 +1,66 @@
-var qandA = document.querySelector(".questions");
-var questionArray = ['Where is the Matador statue?','Where is The Klotz Student Health Center','Where is the Matadome stadium?','Where is the Chicano House Building?','Where is the Sierra Tower?'];
-var results = ['That is the correct location', 'Wrong, that was the not the correct location'];
+const qandA = document.querySelector(".questions");
+const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
+const results = ['That is the correct location', 'Wrong, that was the not the correct location'];
+
 //array to hold the 5 boundaries for the rectangles.
-var boundsArray = [{
-      north: 34.24006,
-      south: 34.23976,
-      east: -118.52760,
-      west: -118.52804,},
-      {north: 34.23847,
-      south: 34.23785,
-      east: -118.52591,
-      west: -118.52669,
-      },{
-      north: 34.24255,
-      south: 34.24131,
-      east: -118.52535,
-      west: -118.52682,
-    },{
-      north: 34.24272,
-      south: 34.24240,
-      east: -118.52976,
-      west: -118.53032,
-    },{
-      north: 34.23915,
-      south: 34.23848,
-      east: -118.53002,
-      west: -118.53035,
-    }];
+const boundsArray = [
+    {
+        // Cypress Hall
+        north: 34.23604209328175,
+        south: 34.236700640979436,
+        east: -118.52930687953804,
+        west: -118.53007310918174,
+    },
+    {
+        // Sierra Hall
+        north: 34.238113187747075,
+        south: 34.238441362243115,
+        east: -118.53005880181061,
+        west: -118.53137308412114,
+    },
+    {
+        // Live Oak Hall
+        north: 34.23818857929854,
+        south: 34.2383748404892,
+        east: -118.52766090714607,
+        west: -118.52877670600563,
+    },
+    {
+        // Sierra Quad
+        north: 34.23790918673989,
+        south: 34.23910657689143,
+        east: -118.52894300295104,
+        west: -118.52965110607346,
+    },
+    {
+        // Sequoia Hall
+        north: 34.24016647473023,
+        south: 34.24077402520013,
+        east: -118.52760189855121,
+        west: -118.52842265444309,
+    }
+];
 
-    var dataHTML = '';
-    dataHTML += `<p>${questionArray[0]}</p>`; 
+let dataHTML = '';
+dataHTML += `<p>${questionArray[0]}</p>`; 
 
-    // to hold the user position coordinates
-    var latitude = null;
-    var longitude = null;    
+// position coordinates
+let latitude = null;
+let longitude = null;    
 
-    //array to collect answers for changing css
-    var answers = [];  
+// stores user answers
+const answers = [];  
 
-    //rectangle color
-    var colorArray = ['red','green'];
+// rectangle colors
+const colorArray = ['red','green'];
 
-    // Initialize and add the map
-    function initMap() {
+// Initialize and add the map
+function initMap() {
 
-    // The location of csun for my map
+    // Location of csun
     const csun = { lat: 34.238539355423484, lng: -118.52883183524906 };
 
-    // The map, centered at CSUN
+    // Map centered at CSUN
     const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 17,
         center: csun,
@@ -91,87 +104,86 @@ var boundsArray = [{
         
     });
 
-    //rectangles with appropriate boundaries to be able to use the getBounds() method 
-    //for the comparison to see if user click is within its boundaries 
-    mataStatue = new google.maps.Rectangle({ bounds: boundsArray[0] }); 
-    klotz = new google.maps.Rectangle({ bounds: boundsArray[1] }); 
-    matadome = new google.maps.Rectangle({ bounds: boundsArray[2] }); 
-    chicano = new google.maps.Rectangle({ bounds: boundsArray[3] });  
-    sTower = new google.maps.Rectangle({ bounds: boundsArray[4] });    
+    //Set rectangle locations
+    cypressHall = new google.maps.Rectangle({ bounds: boundsArray[0] }); 
+    sierraHall = new google.maps.Rectangle({ bounds: boundsArray[1] }); 
+    liveOak = new google.maps.Rectangle({ bounds: boundsArray[2] }); 
+    sierraQuad = new google.maps.Rectangle({ bounds: boundsArray[3] });  
+    sequoiaHall = new google.maps.Rectangle({ bounds: boundsArray[4] });    
 
     //remove listener passed 5 iterations
     if (counter >=5){
-        google.maps.event.removeListener(listener1);
+        google.maps.event.removeListener(doubleClickListener1);
     }
     
     //listen to user double clicks inside map and run the immedialely invoked function expression 
-    var listener1 = google.maps.event.addListener(map, "dblclick", function (userClick) {
+    const doubleClickListener1 = google.maps.event.addListener(map, "dblclick", function (userClick) {
     
-    //hold latitude and longituge when user clicks inside map
-      latitude = userClick.latLng.lat();
-      longitude = userClick.latLng.lng();
-  
-    //create circle when user clicks anywhere on map
-     var cityCircle = new google.maps.Circle({
-      strokeColor: "#FF0000",
-      strokeOpacity: 0.1,
-      strokeWeight: 2,
-      fillColor: "#FF0000",
-      fillOpacity: 0.35,
-      map,
-      center: new google.maps.LatLng(latitude,longitude),
-      radius: 25
-    });
-    
-    //will run every 100 milliseconds; gets the fill opacity of circle and reduces its opacity by 0.05
-    setInterval(function() {
-        cityCircle.set("fillOpacity",cityCircle.get("fillOpacity")-0.05);
-    }, 100);
+        //hold latitude and longituge when user clicks inside map
+        latitude = userClick.latLng.lat();
+        longitude = userClick.latLng.lng();
 
-    //setTimout runs once after 500 milliseconds and nullifies the circle so its no longer seen
-    setTimeout(function() {
-            ityCircle.setMap(null);
+        //create circle when user clicks anywhere on map
+        const cityCircle = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.1,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map,
+            center: new google.maps.LatLng(latitude,longitude),
+            radius: 25
+        });
+        
+        //will run every 100 milliseconds; gets the fill opacity of circle and reduces its opacity by 0.05
+        setInterval(function() {
+            cityCircle.set("fillOpacity",cityCircle.get("fillOpacity")-0.05);
+        }, 100);
+
+        //setTimout runs once after 500 milliseconds and nullifies the circle so its no longer seen
+        setTimeout(function() {
+                ityCircle.setMap(null);
         }, 500);
-    }); //end addListener   
+    });
 
     //create counter variable for each time user clicks inside map     
-    var counter = 0;   
+    let counter = 0;   
     
     //array to use to modify the even p tags content in a for loop and using queryselector appr.line 171
-    var colorA = [2,4,6,8,10];   
+    const colorA = [2,4,6,8,10];   
     
     //var answerBlue = 0;
-    var listener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
+    const doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
 
     function isWithinRectangle(){
+        
         // remove listeners if passed the 5 iterations
-            
         if (counter >=4) {
-            google.maps.event.removeListener(listener1);
+            google.maps.event.removeListener(doubleClickListener1);
         }    
             
         if (counter >=4) {
-            google.maps.event.removeListener(listener2);
+            google.maps.event.removeListener(doubleClickListener2);
         }    
         
         //point holds object with position where user clicks
-        var point = new google.maps.LatLng(latitude.toFixed(5),longitude.toFixed(5));
+        const point = new google.maps.LatLng(latitude.toFixed(5),longitude.toFixed(5));
         
         //use the correct rectangle boundaries for each iteration.
         if (counter == 0){
-            var isWithinRectangle = mataStatue.getBounds().contains(point);
+            const isWithinRectangle = cypressHall.getBounds().contains(point);
         }
         if (counter == 1){
-            var isWithinRectangle = klotz.getBounds().contains(point);
+            const isWithinRectangle = sierraHall.getBounds().contains(point);
         }
         if (counter == 2){
-            var isWithinRectangle = matadome.getBounds().contains(point);
+            const isWithinRectangle = liveOak.getBounds().contains(point);
         }
         if (counter == 3){
-            var isWithinRectangle = chicano.getBounds().contains(point);
+            const isWithinRectangle = sierraQuad.getBounds().contains(point);
         }
         if (counter == 4){
-            var isWithinRectangle = sTower.getBounds().contains(point);
+            const isWithinRectangle = sequoiaHall.getBounds().contains(point);
         }
 
         if (isWithinRectangle){
@@ -191,12 +203,12 @@ var boundsArray = [{
             answers.push('#90EE90');
 
             //modify background color for the results 
-            for (let c=0; c < answers.length; c++) {
-                document.querySelector("p:nth-child("+colorA[c]+")").style.backgroundColor = answers[c];
+            for (let i = 0; i < answers.length; i++) {
+                document.querySelector("p:nth-child(" + colorA[i] + ")").style.backgroundColor = answers[i];
             } 
 
             //create a rectangle with green color after user clicks from the predefined bounds for this iteration
-            let rectangle7 = new google.maps.Rectangle({
+            const rectangle7 = new google.maps.Rectangle({
                 strokeColor: colorArray[1],
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -206,10 +218,10 @@ var boundsArray = [{
                 bounds: boundsArray[counter],
             });
         }
-     
+    
         //if user didnt click inside bounds then change result in the dataHTML variable then display and make rectangle red
         else {
-           if (counter != 4) {
+            if (counter != 4) {
                 dataHTML += `<p>${results[1]}</p><p>${questionArray[counter+1]}</p>`;
             } else {
                 dataHTML += `<p>${results[1]}</p>`;
@@ -218,11 +230,11 @@ var boundsArray = [{
             qandA.innerHTML = dataHTML;
             answers.push('#FA8072');
 
-            for (let c=0; c < answers.length; c++){
-                document.querySelector("p:nth-child("+colorA[c]+")").style.backgroundColor = answers[c];
+            for (let i = 0; i < answers.length; i++){
+                document.querySelector("p:nth-child(" + colorA[i] + ")").style.backgroundColor = answers[i];
             }
 
-            let rectangle7 = new google.maps.Rectangle({
+            const rectangle7 = new google.maps.Rectangle({
                 strokeColor: colorArray[0],
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
@@ -232,8 +244,9 @@ var boundsArray = [{
                 bounds: boundsArray[counter],
             });
         } 
-      //add one every time user clicks 
-     counter++; 
-  } //ends isWithinRectangle()
-      
-}   //ends initMap()
+        
+        //add one every time user clicks 
+        counter++; 
+
+    }      
+}   
