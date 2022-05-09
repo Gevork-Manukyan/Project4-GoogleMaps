@@ -6,38 +6,38 @@ const results = ['That is the correct location', 'Wrong, that was the not the co
 const boundsArray = [
     {
         // Cypress Hall
-        north: 34.23604209328175,
-        south: 34.236700640979436,
-        east: -118.52930687953804,
-        west: -118.53007310918174,
-    },
+        north: 34.23670954559652,
+        south: 34.23603447311616,
+        east: -118.52927496547709,
+        west: -118.530078770327,
+    }, 
     {
         // Sierra Hall
-        north: 34.238113187747075,
-        south: 34.238441362243115,
-        east: -118.53005880181061,
-        west: -118.53137308412114,
+        north: 34.23843939412626,
+        south: 34.23811241328809,
+        east: -118.53004049389573,
+        west: -118.53137378924201,
     },
     {
         // Live Oak Hall
-        north: 34.23818857929854,
-        south: 34.2383748404892,
-        east: -118.52766090714607,
-        west: -118.52877670600563,
+        north: 34.238365559854444,
+        south: 34.23818624778191,
+        east: -118.52761632053884,
+        west: -118.52881564841013,
     },
     {
         // Sierra Quad
-        north: 34.23790918673989,
-        south: 34.23910657689143,
-        east: -118.52894300295104,
-        west: -118.52965110607346,
+        north: 34.239114447323104,
+        south: 34.23789618332654,
+        east: -118.528936857078,
+        west: -118.52965135027792,
     },
     {
         // Sequoia Hall
-        north: 34.24016647473023,
-        south: 34.24077402520013,
-        east: -118.52760189855121,
-        west: -118.52842265444309,
+        north: 34.24078096176456,
+        south: 34.240148112079396,
+        east: -118.52760356164933,
+        west: -118.5284201253064,
     }
 ];
 
@@ -53,6 +53,9 @@ const answers = [];
 
 // rectangle colors
 const colorArray = ['red','green'];
+
+//create counter variable for each time user clicks inside map     
+let counter = 0;   
 
 // Initialize and add the map
 function initMap() {
@@ -105,11 +108,11 @@ function initMap() {
     });
 
     //Set rectangle locations
-    cypressHall = new google.maps.Rectangle({ bounds: boundsArray[0] }); 
-    sierraHall = new google.maps.Rectangle({ bounds: boundsArray[1] }); 
-    liveOak = new google.maps.Rectangle({ bounds: boundsArray[2] }); 
-    sierraQuad = new google.maps.Rectangle({ bounds: boundsArray[3] });  
-    sequoiaHall = new google.maps.Rectangle({ bounds: boundsArray[4] });    
+    const cypressHall = new google.maps.Rectangle({ bounds: boundsArray[0] }); 
+    const sierraHall = new google.maps.Rectangle({ bounds: boundsArray[1] }); 
+    const liveOak = new google.maps.Rectangle({ bounds: boundsArray[2] }); 
+    const sierraQuad = new google.maps.Rectangle({ bounds: boundsArray[3] });  
+    const sequoiaHall = new google.maps.Rectangle({ bounds: boundsArray[4] });    
 
     //remove listener passed 5 iterations
     if (counter >=5){
@@ -117,43 +120,29 @@ function initMap() {
     }
     
     //listen to user double clicks inside map and run the immedialely invoked function expression 
-    const doubleClickListener1 = google.maps.event.addListener(map, "dblclick", function (userClick) {
-    
+    let doubleClickListener1 = google.maps.event.addListener(map, "dblclick", function (userClick) {
+
         //hold latitude and longituge when user clicks inside map
         latitude = userClick.latLng.lat();
         longitude = userClick.latLng.lng();
 
         //create circle when user clicks anywhere on map
         const cityCircle = new google.maps.Circle({
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.1,
+            strokeColor: "#ff726f",
+            strokeOpacity: 1,
             strokeWeight: 2,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
+            fillColor: "#ff726f",
+            fillOpacity: 0.75,
             map,
             center: new google.maps.LatLng(latitude,longitude),
-            radius: 25
+            radius: 15
         });
-        
-        //will run every 100 milliseconds; gets the fill opacity of circle and reduces its opacity by 0.05
-        setInterval(function() {
-            cityCircle.set("fillOpacity",cityCircle.get("fillOpacity")-0.05);
-        }, 100);
-
-        //setTimout runs once after 500 milliseconds and nullifies the circle so its no longer seen
-        setTimeout(function() {
-                ityCircle.setMap(null);
-        }, 500);
     });
-
-    //create counter variable for each time user clicks inside map     
-    let counter = 0;   
     
     //array to use to modify the even p tags content in a for loop and using queryselector appr.line 171
     const colorA = [2,4,6,8,10];   
     
-    //var answerBlue = 0;
-    const doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
+    let doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
 
     function isWithinRectangle(){
         
@@ -167,42 +156,40 @@ function initMap() {
         }    
         
         //point holds object with position where user clicks
-        const point = new google.maps.LatLng(latitude.toFixed(5),longitude.toFixed(5));
+        const point = new google.maps.LatLng(latitude, longitude);
         
         //use the correct rectangle boundaries for each iteration.
+        let isWithinRectangle
         if (counter == 0){
-            const isWithinRectangle = cypressHall.getBounds().contains(point);
+            isWithinRectangle = cypressHall.getBounds().contains(point);
         }
-        if (counter == 1){
-            const isWithinRectangle = sierraHall.getBounds().contains(point);
+        else if (counter == 1){
+            isWithinRectangle = sierraHall.getBounds().contains(point);
         }
-        if (counter == 2){
-            const isWithinRectangle = liveOak.getBounds().contains(point);
+        else if (counter == 2){
+            isWithinRectangle = liveOak.getBounds().contains(point);
         }
-        if (counter == 3){
-            const isWithinRectangle = sierraQuad.getBounds().contains(point);
+        else if (counter == 3){
+            isWithinRectangle = sierraQuad.getBounds().contains(point);
         }
-        if (counter == 4){
-            const isWithinRectangle = sequoiaHall.getBounds().contains(point);
+        else if (counter == 4){
+            isWithinRectangle = sequoiaHall.getBounds().contains(point);
         }
 
         if (isWithinRectangle){
             //if it isnt last question then store the result and the next question in variable dataHTML
             if (counter != 4) {
-                // back ticks are needed else it doesnt work to interpolate the array 
                 dataHTML += `<p>${results[0]}</p><p>${questionArray[counter+1]}</p>`;
-                //if its the last question store the result of that question    
-            } else{
+            } 
+            
+            //if its the last question store the result of that question    
+            else{
                 dataHTML += `<p>${results[0]}</p>`;
             }
             
-            //display the data
             qandA.innerHTML = dataHTML;  
-
-            // push the color to the end of the array
             answers.push('#90EE90');
 
-            //modify background color for the results 
             for (let i = 0; i < answers.length; i++) {
                 document.querySelector("p:nth-child(" + colorA[i] + ")").style.backgroundColor = answers[i];
             } 
