@@ -1,4 +1,4 @@
-!<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -6,11 +6,26 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <script src="app.js" async defer></script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVbz03PiX9mgysfTG6Umwg8mlxvQTcHA0&map_ids=a39d0f9cc9908613&callback=initMap&libraries=geometry&v=weekly"
+            async
+            defer
+        ></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-       
+        <h1>My CSUN Google Maps Game</h1>
+        <h2>Please double click on the map the location of:</h2>
+
+        <section class="container">
+            <div class="questions">
+                <p>Where is the Matador statue?</p>
+            </div>
+            <!--The div element for the map -->
+            <div id="map"></div>
+        </section>
         
-        <script src="app.js" async defer></script>
     </body>
 </html>

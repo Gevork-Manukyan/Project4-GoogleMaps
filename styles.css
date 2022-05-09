@@ -1,0 +1,51 @@
+body {
+    font-family: helvetica, arial, sans-serif;
+    margin: 2em;
+}
+
+h1 {
+    background-color: #707070;
+    padding: 20px;
+    border-style: solid;
+    color: white;
+    text-align: center;
+}
+
+h3 {
+    font-style: italic;
+    color: #373fff;
+}
+.container {
+    margin: 2em;
+    min-width: 1200px;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+}
+.questions {
+    color: #555;
+    width: 330px;
+    margin-left: 130px;
+}
+
+p {
+    margin:0;
+}
+
+p:nth-child(even) {
+    text-align: center;
+}
+
+p:nth-child(odd) {
+    background-color: #dddddd;
+    font-weight: bold;
+    text-align: center;
+}
+
+#map {
+    height: 800px;
+    width: 700px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+  
