@@ -197,9 +197,9 @@ function initMap() {
             // create a green rectangle for the location the user correctly guessed
             new google.maps.Rectangle({
                 strokeColor: colorArrayrray[1],
-                strokeOpacity: 0.8,
+                strokeOpacity: 1,
                 strokeWeight: 2,
-                fillOpacity: 0.35,
+                fillOpacity: 0.40,
                 fillColor: colorArrayrray[1],
                 map,
                 bounds: boundsArray[counter],
@@ -229,9 +229,9 @@ function initMap() {
             // create a red rectangle for the location the user incorrectly guessed
             new google.maps.Rectangle({
                 strokeColor: colorArrayrray[0],
-                strokeOpacity: 0.8,
+                strokeOpacity: 1,
                 strokeWeight: 2,
-                fillOpacity: 0.35,
+                fillOpacity: 0.40,
                 fillColor: colorArrayrray[0],
                 map,
                 bounds: boundsArray[counter],
