@@ -1,4 +1,6 @@
 const pArea = document.querySelector("#pArea");
+const startBtn = document.querySelector("#startBtn");
+const resetBtn = document.querySelector("#resetBtn");
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
 const results = ['That is the correct location', 'That is the wrong location'];
 
@@ -41,15 +43,15 @@ const boundsArray = [
     }
 ];
 
-let textHTML = '';
-textHTML += `<p>${questionArray[0]}</p>`; 
+let isStarted = false;
+let textHTML = `<p>${questionArray[0]}</p>`;
 
 // position coordinates
 let latitude = null;
 let longitude = null;    
 
 // stores user answers
-const answers = [];  
+let answers = [];  
 
 // rectangle colors
 const colorArrayrray = ['red','green'];
@@ -57,9 +59,28 @@ const colorArrayrray = ['red','green'];
 // count number of clicks
 let counter = 0;   
 
+startBtn.addEventListener('click', startOnClick)
+function startOnClick() {
+    isStarted = true;
+    document.getElementById("startBtn").style.display = "none";
+    pArea.innerHTML = textHTML;
+    initMap()
+}
+
+resetBtn.addEventListener('click', resetOnClick)
+function resetOnClick() {
+    isStarted = false;
+    document.getElementById("resetBtn").style.display = "none";
+    counter = 0;
+    answers = []
+    textHTML = `<p>${questionArray[0]}</p>`;
+    pArea.innerHTML = ''
+    document.getElementById("startBtn").style.display = "inline-block";
+    initMap()
+}
+
 // Initialize and add the map
 function initMap() {
-
     // Location of csun
     const csun = { lat: 34.238539355423484, lng: -118.52883183524906 };
 
@@ -119,14 +140,18 @@ function initMap() {
         google.maps.event.removeListener(doubleClickListener1);
     }
     
-    // listen to user double clicks inside map and create circles at click location
-    let doubleClickListener1 = google.maps.event.addListener(map, "dblclick", (userClick) => {
+    let doubleClickListener1;
+    if (isStarted) {
+        doubleClickListener1 = google.maps.event.addListener(map, "dblclick", createCircle)
+    }
 
+    // listen to user double clicks inside map and create circles at click location
+    function createCircle (userClick) {
         latitude = userClick.latLng.lat();
         longitude = userClick.latLng.lng();
 
         // create circle
-        const cityCircle = new google.maps.Circle({
+        new google.maps.Circle({
             strokeColor: "#ff726f",
             strokeOpacity: 1,
             strokeWeight: 2,
@@ -136,13 +161,17 @@ function initMap() {
             center: new google.maps.LatLng(latitude,longitude),
             radius: 10
         });
-    });
+    }
     
     // array to modify answer <p> tags
     const colorArray = [2,4,6,8,10];   
-    let doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
+    let doubleClickListener2;
 
-    function isWithinRectangle(){
+    if (isStarted) {
+        doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
+    }
+
+    function isWithinRectangle () {
         
         // remove listener if user clicked 5 times
         if (counter >=4) {
@@ -185,6 +214,7 @@ function initMap() {
             // if last question, store result 
             else{
                 textHTML += `<p>${results[0]}</p>`;
+                document.getElementById("resetBtn").style.display = "inline-block"
             }
             
             pArea.innerHTML = textHTML;  
@@ -217,6 +247,7 @@ function initMap() {
             // if last question, store result 
             else {
                 textHTML += `<p>${results[1]}</p>`;
+                document.getElementById("resetBtn").style.display = "inline-block"
             }
 
             pArea.innerHTML = textHTML;
@@ -242,4 +273,4 @@ function initMap() {
         counter++; 
 
     }      
-}   
+}
