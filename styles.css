@@ -11,11 +11,13 @@ h1 {
     border-style: solid;
     color: black;
     text-align: center;
+    border-radius: 25px;
 }
 
 h2 {
     background-color: #D8B241;
     padding: 10px 100px;
+    border-radius: 25px;
 }
 
 .flex-container {
@@ -29,13 +31,18 @@ h2 {
 }
 
 #instructions p {
-    padding-bottom: 20px;
+    padding: 20px 0px;
+    background-color: #1DB0B5;
+    font-weight: bold;
+    margin: 0px 30px 10px 30px;
+    border-radius: 25px;
 }
 
 #map {
     height: 800px;
     width: 700px;
     border: 1px solid #ccc;
+    border-radius: 25px;
     text-align: left;
 }
 
@@ -53,6 +60,7 @@ p {
     padding: 10px 0px;
     margin-bottom: 10px;
     text-align: center;
+    border-radius: 0px 0px 25px 25px;
 }
 
 .questionArea p:nth-child(odd) {
@@ -60,4 +68,5 @@ p {
     background-color: #7EAC99;
     font-weight: bold;
     text-align: center;
+    border-radius: 25px 25px 0px 0px;
 }

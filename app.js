@@ -1,6 +1,6 @@
 const pArea = document.querySelector("#pArea");
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
-const results = ['That is the correct location', 'Wrong, that was the not the correct location'];
+const results = ['That is the correct location', 'That is the wrong location'];
 
 //array to hold the boundaries
 const boundsArray = [
