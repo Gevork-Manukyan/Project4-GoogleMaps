@@ -19,9 +19,6 @@ h2 {
 }
 
 .flex-container {
-    /* margin: 2em;
-    min-width: 1200px;
-    max-width: 1200px; */
     display: flex;
     justify-content: space-evenly;
 }
@@ -45,7 +42,6 @@ h2 {
 .questionArea {
     color: #555;
     width: 330px;
-    margin-left: 130px;
     text-align: center;
 }
 
@@ -54,11 +50,14 @@ p {
 }
 
 .questionArea p:nth-child(even) {
+    padding: 10px 0px;
+    margin-bottom: 10px;
     text-align: center;
 }
 
 .questionArea p:nth-child(odd) {
-    background-color: #dddddd;
+    padding: 10px 0px;
+    background-color: #7EAC99;
     font-weight: bold;
     text-align: center;
 }

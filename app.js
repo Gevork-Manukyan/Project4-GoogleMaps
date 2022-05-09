@@ -188,7 +188,7 @@ function initMap() {
             }
             
             pArea.innerHTML = textHTML;  
-            answers.push('#19e64d');
+            answers.push('#84df82');
 
             for (let i = 0; i < answers.length; i++) {
                 pArea.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
@@ -220,7 +220,7 @@ function initMap() {
             }
 
             pArea.innerHTML = textHTML;
-            answers.push('#f83e39');
+            answers.push('#DF8289');
 
             for (let i = 0; i < answers.length; i++){
                 pArea.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
