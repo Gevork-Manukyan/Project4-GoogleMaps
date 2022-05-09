@@ -1,8 +1,8 @@
-const qandA = document.querySelector(".questions");
+const questionArea = document.querySelector(".questionArea");
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
 const results = ['That is the correct location', 'Wrong, that was the not the correct location'];
 
-//array to hold the 5 boundaries for the rectangles.
+//array to hold the boundaries
 const boundsArray = [
     {
         // Cypress Hall
@@ -41,8 +41,8 @@ const boundsArray = [
     }
 ];
 
-let dataHTML = '';
-dataHTML += `<p>${questionArray[0]}</p>`; 
+let textHTML = '';
+textHTML += `<p>${questionArray[0]}</p>`; 
 
 // position coordinates
 let latitude = null;
@@ -52,9 +52,9 @@ let longitude = null;
 const answers = [];  
 
 // rectangle colors
-const colorArray = ['red','green'];
+const colorArrayrray = ['red','green'];
 
-//create counter variable for each time user clicks inside map     
+// count number of clicks
 let counter = 0;   
 
 // Initialize and add the map
@@ -107,26 +107,25 @@ function initMap() {
         
     });
 
-    //Set rectangle locations
+    // Set rectangle locations
     const cypressHall = new google.maps.Rectangle({ bounds: boundsArray[0] }); 
     const sierraHall = new google.maps.Rectangle({ bounds: boundsArray[1] }); 
     const liveOak = new google.maps.Rectangle({ bounds: boundsArray[2] }); 
     const sierraQuad = new google.maps.Rectangle({ bounds: boundsArray[3] });  
     const sequoiaHall = new google.maps.Rectangle({ bounds: boundsArray[4] });    
 
-    //remove listener passed 5 iterations
+    // remove listener passed 5 iterations
     if (counter >=5){
         google.maps.event.removeListener(doubleClickListener1);
     }
     
-    //listen to user double clicks inside map and run the immedialely invoked function expression 
-    let doubleClickListener1 = google.maps.event.addListener(map, "dblclick", function (userClick) {
+    // listen to user double clicks inside map and create circles at click location
+    let doubleClickListener1 = google.maps.event.addListener(map, "dblclick", (userClick) => {
 
-        //hold latitude and longituge when user clicks inside map
         latitude = userClick.latLng.lat();
         longitude = userClick.latLng.lng();
 
-        //create circle when user clicks anywhere on map
+        // create circle
         const cityCircle = new google.maps.Circle({
             strokeColor: "#ff726f",
             strokeOpacity: 1,
@@ -135,18 +134,17 @@ function initMap() {
             fillOpacity: 0.75,
             map,
             center: new google.maps.LatLng(latitude,longitude),
-            radius: 15
+            radius: 10
         });
     });
     
-    //array to use to modify the even p tags content in a for loop and using queryselector appr.line 171
-    const colorA = [2,4,6,8,10];   
-    
+    // array to modify answer <p> tags
+    const colorArray = [2,4,6,8,10];   
     let doubleClickListener2 = google.maps.event.addListener(map , "dblclick", isWithinRectangle);
 
     function isWithinRectangle(){
         
-        // remove listeners if passed the 5 iterations
+        // remove listener if user clicked 5 times
         if (counter >=4) {
             google.maps.event.removeListener(doubleClickListener1);
         }    
@@ -155,10 +153,10 @@ function initMap() {
             google.maps.event.removeListener(doubleClickListener2);
         }    
         
-        //point holds object with position where user clicks
+        // point holds object with position where user clicked
         const point = new google.maps.LatLng(latitude, longitude);
         
-        //use the correct rectangle boundaries for each iteration.
+        // use the correct rectangle boundaries for location
         let isWithinRectangle
         if (counter == 0){
             isWithinRectangle = cypressHall.getBounds().contains(point);
@@ -176,63 +174,71 @@ function initMap() {
             isWithinRectangle = sequoiaHall.getBounds().contains(point);
         }
 
+        // if user clicked correctly, update questions and show green rectangle
         if (isWithinRectangle){
-            //if it isnt last question then store the result and the next question in variable dataHTML
+
+            // if not last question, store result and load next question
             if (counter != 4) {
-                dataHTML += `<p>${results[0]}</p><p>${questionArray[counter+1]}</p>`;
+                textHTML += `<p>${results[0]}</p><p>${questionArray[counter+1]}</p>`;
             } 
             
-            //if its the last question store the result of that question    
+            // if last question, store result 
             else{
-                dataHTML += `<p>${results[0]}</p>`;
+                textHTML += `<p>${results[0]}</p>`;
             }
             
-            qandA.innerHTML = dataHTML;  
-            answers.push('#90EE90');
+            questionArea.innerHTML = textHTML;  
+            answers.push('#19e64d');
 
             for (let i = 0; i < answers.length; i++) {
-                document.querySelector("p:nth-child(" + colorA[i] + ")").style.backgroundColor = answers[i];
+                document.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
             } 
 
-            //create a rectangle with green color after user clicks from the predefined bounds for this iteration
-            const rectangle7 = new google.maps.Rectangle({
-                strokeColor: colorArray[1],
+            // create a green rectangle for the location the user correctly guessed
+            new google.maps.Rectangle({
+                strokeColor: colorArrayrray[1],
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: colorArray[1],
                 fillOpacity: 0.35,
+                fillColor: colorArrayrray[1],
                 map,
                 bounds: boundsArray[counter],
             });
         }
     
-        //if user didnt click inside bounds then change result in the dataHTML variable then display and make rectangle red
+        // if user clicked incorrectly, update questions and show red rectangle
         else {
+
+            // if not last question, store result and load next question
             if (counter != 4) {
-                dataHTML += `<p>${results[1]}</p><p>${questionArray[counter+1]}</p>`;
-            } else {
-                dataHTML += `<p>${results[1]}</p>`;
+                textHTML += `<p>${results[1]}</p><p>${questionArray[counter+1]}</p>`;
+            } 
+            
+            // if last question, store result 
+            else {
+                textHTML += `<p>${results[1]}</p>`;
             }
-            //display the data
-            qandA.innerHTML = dataHTML;
-            answers.push('#FA8072');
+
+            questionArea.innerHTML = textHTML;
+            answers.push('#f83e39');
 
             for (let i = 0; i < answers.length; i++){
-                document.querySelector("p:nth-child(" + colorA[i] + ")").style.backgroundColor = answers[i];
+                document.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
             }
 
-            const rectangle7 = new google.maps.Rectangle({
-                strokeColor: colorArray[0],
+            // create a red rectangle for the location the user incorrectly guessed
+            new google.maps.Rectangle({
+                strokeColor: colorArrayrray[0],
                 strokeOpacity: 0.8,
                 strokeWeight: 2,
-                fillColor: colorArray[0],
                 fillOpacity: 0.35,
+                fillColor: colorArrayrray[0],
                 map,
                 bounds: boundsArray[counter],
             });
         } 
         
-        //add one every time user clicks 
+        // Increase user clicks
         counter++; 
 
     }      
