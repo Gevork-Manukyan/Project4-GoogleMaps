@@ -1,4 +1,4 @@
-const questionArea = document.querySelector(".questionArea");
+const pArea = document.querySelector("#pArea");
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
 const results = ['That is the correct location', 'Wrong, that was the not the correct location'];
 
@@ -187,11 +187,11 @@ function initMap() {
                 textHTML += `<p>${results[0]}</p>`;
             }
             
-            questionArea.innerHTML = textHTML;  
+            pArea.innerHTML = textHTML;  
             answers.push('#19e64d');
 
             for (let i = 0; i < answers.length; i++) {
-                document.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
+                pArea.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
             } 
 
             // create a green rectangle for the location the user correctly guessed
@@ -219,11 +219,11 @@ function initMap() {
                 textHTML += `<p>${results[1]}</p>`;
             }
 
-            questionArea.innerHTML = textHTML;
+            pArea.innerHTML = textHTML;
             answers.push('#f83e39');
 
             for (let i = 0; i < answers.length; i++){
-                document.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
+                pArea.querySelector("p:nth-child(" + colorArray[i] + ")").style.backgroundColor = answers[i];
             }
 
             // create a red rectangle for the location the user incorrectly guessed

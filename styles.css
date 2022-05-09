@@ -1,45 +1,38 @@
 body {
     font-family: helvetica, arial, sans-serif;
     margin: 2em;
+    background-color: #FCF9E4;
 }
 
 h1 {
-    background-color: #707070;
+    background-color: #C4495C;
+    margin-bottom: 65px;
     padding: 20px;
     border-style: solid;
-    color: white;
+    color: black;
     text-align: center;
 }
 
-h3 {
-    font-style: italic;
-    color: #373fff;
+h2 {
+    background-color: #D8B241;
+    padding: 10px 100px;
 }
-.container {
-    margin: 2em;
+
+.flex-container {
+    /* margin: 2em;
     min-width: 1200px;
-    max-width: 1200px;
+    max-width: 1200px; */
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
-.questions {
+
+#instructions {
     color: #555;
-    width: 330px;
-    margin-left: 130px;
-}
-
-p {
-    margin:0;
-}
-
-p:nth-child(even) {
     text-align: center;
 }
 
-p:nth-child(odd) {
-    background-color: #dddddd;
-    font-weight: bold;
-    text-align: center;
+#instructions p {
+    padding-bottom: 20px;
 }
 
 #map {
@@ -48,4 +41,24 @@ p:nth-child(odd) {
     border: 1px solid #ccc;
     text-align: left;
 }
-  
+
+.questionArea {
+    color: #555;
+    width: 330px;
+    margin-left: 130px;
+    text-align: center;
+}
+
+p {
+    margin:0;
+}
+
+.questionArea p:nth-child(even) {
+    text-align: center;
+}
+
+.questionArea p:nth-child(odd) {
+    background-color: #dddddd;
+    font-weight: bold;
+    text-align: center;
+}
