@@ -3,6 +3,7 @@ const startBtn = document.querySelector("#startBtn");
 const resetBtn = document.querySelector("#resetBtn");
 const scoreParagraph = document.getElementById("scoreParagraph")
 const score = document.getElementById("score")
+const highscores = document.getElementById("highscores")
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
 const results = ['That is the correct location', 'That is the wrong location'];
 
@@ -44,6 +45,11 @@ const boundsArray = [
         west: -118.5284201253064,
     }
 ];
+
+let leaderboardArr = JSON.parse(window.localStorage.getItem("leaderboard"))
+if (leaderboardArr === null) {
+    leaderboardArr = []
+}
 
 let isStarted = false;
 let textHTML = `<p>${questionArray[0]}</p>`;
