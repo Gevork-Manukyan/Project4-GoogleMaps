@@ -54,6 +54,7 @@ if (leaderboardArr === null || leaderboardArr === undefined) {
     leaderboardArr = JSON.parse(leaderboardArr)
 }
 
+// Refreshes the leaderboard html
 refreshHtmlLeaderboard()
 
 let isStarted = false;
@@ -75,6 +76,7 @@ let counter = 0;
 // number of correct guess
 let correctAmt = 0;
 
+// Event listener for starting button
 startBtn.addEventListener('click', startOnClick)
 function startOnClick() {
     isStarted = true;
@@ -82,7 +84,7 @@ function startOnClick() {
     pArea.innerHTML = textHTML;
     initMap()
 }
-
+// Event listener for reset button
 resetBtn.addEventListener('click', resetOnClick)
 function resetOnClick() {
     isStarted = false;
