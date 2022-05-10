@@ -25,9 +25,16 @@ h2 {
     justify-content: space-evenly;
 }
 
-#instructions {
+#leftSide {
     color: #555;
     text-align: center;
+}
+
+#instructions {
+}
+
+#leaderboard {
+    margin-top: 30px;
 }
 
 #instructions p {
@@ -98,4 +105,14 @@ button {
 
 #resetBtn:active {
     background-color: #a3364f;
+}
+
+#scoreParagraph {
+    display: none;
+    margin-top: 25px;
+}
+
+#score {
+    display: none;
+    background-color: #D8B241;
 }

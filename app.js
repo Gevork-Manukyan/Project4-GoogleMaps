@@ -1,6 +1,8 @@
 const pArea = document.querySelector("#pArea");
 const startBtn = document.querySelector("#startBtn");
 const resetBtn = document.querySelector("#resetBtn");
+const scoreParagraph = document.getElementById("scoreParagraph")
+const score = document.getElementById("score")
 const questionArray = ['Where is Cypress Hall?','Where is Sierra Hall','Where is Live Oak Hall?','Where is the Sierra Quad?','Where is Sequoia Hall?'];
 const results = ['That is the correct location', 'That is the wrong location'];
 
@@ -59,6 +61,9 @@ const colorArrayrray = ['red','green'];
 // count number of clicks
 let counter = 0;   
 
+// number of correct guess
+let correctAmt = 0;
+
 startBtn.addEventListener('click', startOnClick)
 function startOnClick() {
     isStarted = true;
@@ -76,6 +81,9 @@ function resetOnClick() {
     textHTML = `<p>${questionArray[0]}</p>`;
     pArea.innerHTML = ''
     document.getElementById("startBtn").style.display = "inline-block";
+    scoreParagraph.style.display = "none"
+    score.style.display = "none"
+    correctAmt = 0;
     initMap()
 }
 
@@ -205,6 +213,7 @@ function initMap() {
 
         // if user clicked correctly, update questions and show green rectangle
         if (isWithinRectangle){
+            correctAmt++;
 
             // if not last question, store result and load next question
             if (counter != 4) {
@@ -215,6 +224,9 @@ function initMap() {
             else{
                 textHTML += `<p>${results[0]}</p>`;
                 document.getElementById("resetBtn").style.display = "inline-block"
+                scoreParagraph.style.display = "block"
+                score.style.display = "block"
+                score.innerHTML = correctAmt;
             }
             
             pArea.innerHTML = textHTML;  
@@ -248,6 +260,9 @@ function initMap() {
             else {
                 textHTML += `<p>${results[1]}</p>`;
                 document.getElementById("resetBtn").style.display = "inline-block"
+                scoreParagraph.style.display = "block"
+                score.style.display = "block"
+                score.innerHTML = correctAmt;
             }
 
             pArea.innerHTML = textHTML;
