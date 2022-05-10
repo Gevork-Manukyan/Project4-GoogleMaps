@@ -30,19 +30,20 @@ h2 {
     text-align: center;
 }
 
-#instructions {
-}
 
 #leaderboard {
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
-#instructions p {
+#leftSide p {
     padding: 20px 0px;
-    background-color: #1DB0B5;
     font-weight: bold;
     margin: 0px 30px 10px 30px;
     border-radius: 25px;
+}
+
+#instructions p {
+    background-color: #1DB0B5;
 }
 
 #map {
@@ -115,4 +116,8 @@ button {
 #score {
     display: none;
     background-color: #D8B241;
+}
+
+.score {
+    background-color: #EAC5D8;
 }

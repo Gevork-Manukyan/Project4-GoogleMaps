@@ -46,10 +46,15 @@ const boundsArray = [
     }
 ];
 
-let leaderboardArr = JSON.parse(window.localStorage.getItem("leaderboard"))
-if (leaderboardArr === null) {
+// Retrieve score from local storage
+let leaderboardArr = (window.localStorage.getItem("leaderboard"))
+if (leaderboardArr === null || leaderboardArr === undefined) {
     leaderboardArr = []
+} else {
+    leaderboardArr = JSON.parse(leaderboardArr)
 }
+
+refreshHtmlLeaderboard()
 
 let isStarted = false;
 let textHTML = `<p>${questionArray[0]}</p>`;
@@ -233,6 +238,7 @@ function initMap() {
                 scoreParagraph.style.display = "block"
                 score.style.display = "block"
                 score.innerHTML = correctAmt;
+                updateScores(correctAmt)
             }
             
             pArea.innerHTML = textHTML;  
@@ -269,6 +275,7 @@ function initMap() {
                 scoreParagraph.style.display = "block"
                 score.style.display = "block"
                 score.innerHTML = correctAmt;
+                updateScores(correctAmt)
             }
 
             pArea.innerHTML = textHTML;
@@ -294,4 +301,32 @@ function initMap() {
         counter++; 
 
     }      
+}
+
+// Update Leaderboard
+function updateScores (correctAmt) {
+    if (correctAmt > leaderboardArr[0] || leaderboardArr[0] === undefined)
+        leaderboardArr.splice(0, 0, correctAmt)
+        
+    else if (correctAmt > leaderboardArr[1] || leaderboardArr[1] === undefined)
+        leaderboardArr.splice(1, 0, correctAmt)
+    
+    else if (correctAmt > leaderboardArr[2] || leaderboardArr[2] === undefined)
+        leaderboardArr.splice(2, 0, correctAmt)
+    
+    if (leaderboardArr.length > 3)
+        leaderboardArr.splice(3)
+
+    window.localStorage.setItem("leaderboard", JSON.stringify(leaderboardArr))
+    refreshHtmlLeaderboard();
+}
+
+// Update Leaderboard html
+function refreshHtmlLeaderboard () {
+    highscores.innerHTML = ''
+
+    // Add stored scores to page
+    leaderboardArr.forEach(score => {
+        highscores.innerHTML += `<p class="score">${score}</p>`
+    })
 }
